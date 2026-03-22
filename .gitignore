@@ -50,7 +50,6 @@ venv.bak/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb
 
 # Data files
 *.csv
