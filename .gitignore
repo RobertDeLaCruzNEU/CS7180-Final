@@ -55,7 +55,7 @@ venv.bak/
 *.csv
 *.xlsx
 *.json
-data/
+data/images/
 datasets/
 
 # Models and checkpoints
