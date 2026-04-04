@@ -52,7 +52,6 @@ venv.bak/
 .ipynb_checkpoints
 
 # Data files
-*.csv
 *.xlsx
 *.json
 data/images/
