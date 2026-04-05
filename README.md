@@ -2,25 +2,18 @@
    - Ahad Imran
    - Hamza Akmal Chaudary
    - Robert De La Cruz
-3. Proposed project area (Perception / Behavior / Other Signals) along with proposed data types (images, RF, video, etc). 
-4. Regarding (2) you are no means held to any of this and if you dont have a good idea or concept since we haven't really covered it yet...you are not behind...just do 1 and 4, while ideating on 2 for now.
-5. Set up a group Git Repo and send the link to it (it does not have to be as elaborate as below, in fact it could just have README.md that has the group member names in it and nothing else).
-**Group Git:** Machine Learning Setup
--- Someone init a git repo and invite collaborators (make sure everyone has keys / can push and pull)
--- Set up a README.md for everyone
--- Do something like the below as a starter kit to fill in
--- Regardless of your choice of solution you can easily start to put data in data/raw and tinker with some data/processed for EDA. You can also have a document that has all the steps you plan to take, experiments, etc. that you can start on (the HWs basically)
--- Have a discussion around commits/PRs/merges
+2. **Problem**
+Self-driving vehicles need to predict whether a pedestrian will cross the road 1-2 seconds before it happens. The cues are subtle; head turns, weight shifts, pausing at the curb. Current models infer these implicitly from raw pixels and only become accurate too late. We want to make prediction earlier and more explicit.
+ 
+3. **Approach**
+A three-stream classifier over short video clips of a pedestrian, predicting a binary label: cross or not cross.
+Pose stream : Per-frame skeleton keypoints (ViTPose, pretrained). Captures gait and body orientation. Temporal transformer encoder.
+Appearance stream : Cropped pedestrian frames through a pretrained backbone (ResNet-50). Captures head detail, objects, blur.
+Context stream : Ego speed, distance, crosswalk presence, traffic light state. Simple MLP.
+Streams are fused and classified via MLP.
+ 
+4. **Datasets**
+PIE : 6 hours, 1,842 pedestrians, rich metadata. Primary training set.
+JAAD : 346 clips, 686 pedestrians. Cross-dataset evaluation.
 
-**Project Structure and Environment**
-Standardized Directory Structure: Organize the repository with clear directories to improve navigation:
-- data/ (with subdirectories like raw/ and processed/)
-- src/ (for source code and scripts)
-- notebooks/ (for exploratory analysis)
-- models/ (for trained models, and checkpoints)
-- docs/ (for documentation)
-- results/ (for output files like plots or metrics)
 
-**Use Virtual Environments:** Ensure all team members use the same package versions by utilizing a virtual environment and including a requirements file (e.g., requirements.txt for Python) in the repository.
-**Handle Jupyter Notebooks Carefully:** Clear notebook outputs before committing to minimize merge conflicts and repository bloat. 
-**Dataloaders:** try to use https://docs.pytorch.org/tutorials/beginner/basics/data_tutorial.htmlLinks to an external site. if you want, this should expedite things down the road for you (I typically have a src/dataloader.py file) that anyone can create a new one with the same style.
