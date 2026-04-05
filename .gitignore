@@ -59,6 +59,7 @@ data/videos/clips/
 datasets/
 
 # Models and checkpoints
+*.pkl
 *.joblib
 *.h5
 *.pt
