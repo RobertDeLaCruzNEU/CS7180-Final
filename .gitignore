@@ -64,7 +64,6 @@ datasets/
 *.h5
 *.pt
 *.pth
-models/
 checkpoints/
 
 # Logs
