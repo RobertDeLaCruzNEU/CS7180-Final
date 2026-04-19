@@ -54,9 +54,11 @@ class BoundingBoxEngineering(BaseEstimator, TransformerMixin):
             channels are the normalized bounding box coordinates and class label.
         """
         shape = (len(X), self.max_boxes, *self.dsample, 8)
-        memmap_name = str(uuid.uuid4())
-        frames = np.memmap(f'{memmap_name}.dat', dtype='float32', mode='w+', shape=shape)
-        # frames = np.zeros(shape, dtype=np.float32)
+        if len(X) > 1000:
+            memmap_name = str(uuid.uuid4())
+            frames = np.memmap(f'{memmap_name}.dat', dtype='float32', mode='w+', shape=shape)
+        else:
+            frames = np.zeros(shape, dtype=np.float32)
         
         for i in range(0, len(X), self.batch_size):
             batch_paths = X[i : i + self.batch_size]
