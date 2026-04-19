@@ -64,6 +64,7 @@ datasets/
 *.h5
 *.pt
 *.pth
+*.bin
 checkpoints/
 
 # Logs
