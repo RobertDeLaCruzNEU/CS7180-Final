@@ -28,7 +28,8 @@ SOFTWARE.
 
 """
 import pickle
-import cv2
+# cv2 is imported lazily inside extract_and_save_images to avoid requiring
+# OpenCV in environments where video extraction is not needed (e.g. Modal training)
 import sys
 
 import xml.etree.ElementTree as ET
@@ -221,6 +222,7 @@ class PIE(object):
         return frame_ids
     
     def extract_and_save_images(self, save_path, extract_frame_type='annotated'):
+        import cv2  # noqa: PLC0415
         """
         Extracts images from clips and saves to a specified location
         :param save_path: The directory where you want to save the images

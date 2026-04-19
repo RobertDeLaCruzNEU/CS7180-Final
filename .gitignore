@@ -54,9 +54,7 @@ venv.bak/
 # Data files
 *.xlsx
 *.json
-data/images/
-data/videos/clips/
-datasets/
+data/
 
 # Models and checkpoints
 *.pkl
