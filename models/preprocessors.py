@@ -72,7 +72,11 @@ class BoundingBoxEngineering(BaseEstimator, TransformerMixin):
                 
                 boxes   = result.boxes.xywh.cpu().numpy()
                 classes = result.boxes.cls.cpu().numpy()
-                
+
+                order   = np.argsort(boxes[:,2] * boxes[:,3])[::-1]
+                boxes   = boxes[order]
+                classes = classes[order]
+
                 i = 0
                 for box, cls in zip(boxes, classes):
                     if i >= self.max_boxes:
