@@ -13,7 +13,7 @@ import gc
 import uuid
 
 class BoundingBoxEngineering(BaseEstimator, TransformerMixin):
-    def __init__(self, model = "yolo11n.pt", batch_size = 10, dsample = 128, max_boxes = 10):
+    def __init__(self, model = "yolo11n.pt", batch_size = 10, dsample = 128, max_boxes = 10, conf=.1):
         """
         A custom transformer that uses a pre-trained YOLO model to detect pedestrians
         and traffic lights in images, and transforms each image into a list of cropped objects with metadata.
@@ -28,6 +28,7 @@ class BoundingBoxEngineering(BaseEstimator, TransformerMixin):
         self.batch_size = batch_size
         self.dsample = (dsample, dsample)
         self.max_boxes = max_boxes
+        self.conf = conf
 
     def fit(self, X, y=None):
         return self
@@ -56,13 +57,13 @@ class BoundingBoxEngineering(BaseEstimator, TransformerMixin):
         shape = (len(X), self.max_boxes, *self.dsample, 8)
         if len(X) > 1000:
             memmap_name = str(uuid.uuid4())
-            frames = np.memmap(f'{memmap_name}.dat', dtype='float32', mode='w+', shape=shape)
+            frames = np.memmap(f'{memmap_name}.dat', dtype='float16', mode='w+', shape=shape)
         else:
             frames = np.zeros(shape, dtype=np.float32)
         
         for i in range(0, len(X), self.batch_size):
             batch_paths = X[i : i + self.batch_size]
-            results = self.model(batch_paths, stream=True, verbose=False)
+            results = self.model(batch_paths, stream=True, conf = self.conf, verbose=False)
             
             for idx, result in enumerate(results):
                 global_id = i + idx
