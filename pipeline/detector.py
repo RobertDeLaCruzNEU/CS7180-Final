@@ -10,9 +10,10 @@ import pandas as pd
 import numpy as np
 
 class BoundingBoxEngineering(BaseEstimator, TransformerMixin):
-    def __init__(self):
+    def __init__(self, weights_path: str = "yolo26n.pt"):
         super().__init__()
-        self.model = YOLO("yolo11n.pt")
+        self.weights_path = weights_path
+        self.model = YOLO(weights_path)
 
     def fit(self, X, y=None):
         return self
