@@ -62,6 +62,9 @@ data/
 *.h5
 *.pt
 *.pth
+*.bin
+*.dat
+*.zip
 checkpoints/
 
 # Logs
