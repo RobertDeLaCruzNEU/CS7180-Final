@@ -100,7 +100,7 @@ class BoundingBoxEngineering(BaseEstimator, TransformerMixin):
                         continue
                         
                     crop_resized = np.array(Image.fromarray(crop).resize(self.dsample, Image.LANCZOS)).astype(np.float32) / 255.0
-                    meta = np.array([x/W, y/H, w/W, h/H, cls/1], dtype=np.float32)
+                    meta = np.array([cls,x/W, y/H, w/W, h/H], dtype=np.float32)
                     
                     frame[i] = np.concatenate([crop_resized, np.tile(meta, (*self.dsample, 1))], axis=-1)
                     i += 1
